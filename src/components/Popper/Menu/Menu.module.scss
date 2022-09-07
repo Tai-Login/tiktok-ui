@@ -1,0 +1,36 @@
+.menu-list {
+    width: 234px;
+
+    .menu-item {
+        width: 100%;
+        margin: 0;
+        &:hover {
+            background-color: rgba(22, 24, 35, 0.03);
+        }
+    }
+}
+
+// Header
+
+.header {
+    display: flex;
+    position: relative;
+    height: 50px;
+    margin-top: -8px;
+
+    .back-btn {
+        background-color: transparent;
+        width: 50px;
+    }
+
+    .header-title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+    }
+}

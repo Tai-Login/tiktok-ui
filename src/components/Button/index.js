@@ -24,6 +24,8 @@ function Button({
     small = false,
     large = false,
     children,
+    leftIcon,
+    rightIcon,
     className,
     ...props
 }) {
@@ -54,7 +56,9 @@ function Button({
     }
     return (
         <Comp className={classes} {...props}>
-            <span>{children}</span>
+            {leftIcon && <span className={styles['icon']}>{leftIcon}</span>}{' '}
+            <span className={styles['title']}>{children}</span>
+            {rightIcon && <span className={styles['icon']}>{rightIcon}</span>}
         </Comp>
     )
 }

@@ -5,16 +5,63 @@ import 'tippy.js/dist/tippy.css'
 import styles from './Header.module.scss'
 import images from '~/assets/images'
 import { Wrapper as PopperWrapper } from '~/components/Popper'
-import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import {
+    faCircleQuestion,
+    faCircleXmark,
+    faEarthAsia,
+    faEllipsisVertical,
+    faKeyboard,
+    faMagnifyingGlass,
+    faSpinner,
+} from '@fortawesome/free-solid-svg-icons'
 import AccountItem from '~/components/AccountItem'
 import Button from '~/components/Button'
+import Menu from '~/components/Popper/Menu'
 
 const cx = (className) => {
     return styles[className]
 }
 
+const MENU_ITEMS = [
+    {
+        icon: <FontAwesomeIcon icon={faEarthAsia} />,
+        title: 'English',
+        children: {
+            title: 'Languages',
+            data: [
+                {
+                    type: 'language',
+                    code: 'en',
+                    title: 'English',
+                },
+                {
+                    type: 'language',
+                    code: 'vi',
+                    title: 'Tiếng Việt',
+                },
+            ],
+        },
+    },
+    {
+        icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+        title: 'Feedback and help',
+        to: '/feedback',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faKeyboard} />,
+        title: 'Keyboard shortcut',
+    },
+]
+
 function Header() {
     const [searchResults, setSearchResults] = useState([])
+    const handleMenuChange = (menuItem) => {
+        switch (menuItem.type) {
+            case 'language':
+                break
+            default:
+        }
+    }
     // useEffect(() => {
     //     setTimeout(() => {
     //         setSearchResults([1, 2, 3, 4, 5])
@@ -59,6 +106,11 @@ function Header() {
                         Upload
                     </Button>
                     <Button primary>Log in</Button>
+                    <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
+                        <button className={cx('more-btn')}>
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                        </button>
+                    </Menu>
                 </div>
             </div>
         </header>

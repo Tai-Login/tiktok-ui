@@ -13,6 +13,7 @@
 .inner {
     height: 100%;
     width: var(--default-layout-width);
+    padding: 0 var(--default-layout-horizontal-spacer);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -99,5 +100,15 @@
         background-color: rgba(22, 24, 35, 0.06);
     }
 }
+
 .actions {
+    display: flex;
+    align-items: center;
+
+    & .more-btn {
+        font-size: 2rem;
+        padding: 4px 8px;
+        margin-left: 24px;
+        background-color: transparent;
+    }
 }
