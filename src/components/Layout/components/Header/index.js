@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy from '@tippyjs/react/headless'
 import 'tippy.js/dist/tippy.css'
 import styles from './Header.module.scss'
 import images from '~/assets/images'
-import { Wrapper as PopperWrapper } from '~/components/Popper'
 import {
     faCircleQuestion,
-    faCircleXmark,
+    faCoins,
     faEarthAsia,
     faEllipsisVertical,
+    faGear,
     faKeyboard,
-    faMagnifyingGlass,
-    faSpinner,
+    faSignOut,
+    faUser,
 } from '@fortawesome/free-solid-svg-icons'
-import AccountItem from '~/components/AccountItem'
 import Button from '~/components/Button'
 import Menu from '~/components/Popper/Menu'
+import { MessageIcon, UploadIcon } from '~/components/Icons'
+import Image from '~/components/Image'
+import Search from '~/components/Layout/components/Search'
 
 const cx = (className) => {
     return styles[className]
@@ -54,7 +55,7 @@ const MENU_ITEMS = [
 ]
 
 function Header() {
-    const [searchResults, setSearchResults] = useState([])
+    const currentUser = true
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
             case 'language':
@@ -62,11 +63,29 @@ function Header() {
             default:
         }
     }
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setSearchResults([1, 2, 3, 4, 5])
-    //     }, 2000)
-    // }, [])
+    const userMenu = [
+        {
+            icon: <FontAwesomeIcon icon={faUser} />,
+            title: 'View profile',
+            to: '/@taithai',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faCoins} />,
+            title: 'Get coins',
+            to: '/getcoins',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faGear} />,
+            title: 'Settings',
+            to: '/settings',
+        },
+        ...MENU_ITEMS,
+        {
+            icon: <FontAwesomeIcon icon={faSignOut} />,
+            title: 'Log out',
+            separate: true,
+        },
+    ]
 
     return (
         <header className={cx('wrapper')}>
@@ -74,42 +93,37 @@ function Header() {
                 <div className={cx('logo')}>
                     <img src={images.logo} alt="tiktok" />
                 </div>
-                <Tippy
-                    interactive
-                    visible={searchResults.length > 0}
-                    render={(attrs) => (
-                        <div className={cx('search-results')} tabIndex="-1">
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Accounts</h4>
-                                <div>
-                                    <AccountItem />
-                                    <AccountItem />
-                                    <AccountItem />
-                                </div>
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input type="text" placeholder="Search accounts and videos" spellCheck />
-                        <button className={cx('clear')}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
-                        <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </Tippy>
+                <Search />
                 <div className={cx('actions')}>
-                    <Button to="/upload" text onClick={() => alert('Login')}>
-                        Upload
-                    </Button>
-                    <Button primary>Log in</Button>
-                    <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
-                        <button className={cx('more-btn')}>
-                            <FontAwesomeIcon icon={faEllipsisVertical} />
-                        </button>
+                    {currentUser ? (
+                        <>
+                            <button className={cx('action-btn')}>
+                                <UploadIcon />
+                            </button>
+                            <button className={cx('action-btn')}>
+                                <MessageIcon />
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Button to="/upload" text onClick={() => alert('Login')}>
+                                Upload
+                            </Button>
+                            <Button primary>Log in</Button>
+                        </>
+                    )}
+                    <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                        {currentUser ? (
+                            <Image
+                                className={cx('avatar')}
+                                src="https://yt3.ggpht.com/wgneNTiW753q5G6XMnjyNLAzReR4TVFJryTKTpIqJefrKMyhABPwfnyNWIoT5NNGstFlva1tgw=s48-c-k-c0x00ffffff-no-rj"
+                                alt="Thai Tai"
+                            />
+                        ) : (
+                            <button className={cx('more-btn')}>
+                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                            </button>
+                        )}
                     </Menu>
                 </div>
             </div>
